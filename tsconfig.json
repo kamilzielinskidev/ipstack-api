@@ -2,8 +2,11 @@
   "compilerOptions": {
     "target": "ESNext",
     "outDir": "dist",
+    "baseUrl": "src",
     "module": "CommonJS",
+    "moduleResolution": "node",
     "strict": true,
+    "sourceMap": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -13,11 +16,15 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@connection*": ["connection*"],
+      "@config*": ["config*"],
+      "@effects*": ["effects*"]
+    }
   }
 }
