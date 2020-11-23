@@ -1,21 +1,23 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
 export type Geolocation = {
   adress: string;
+  ip: string;
   country_name: string;
   city: string;
   latitude: number;
   longitude: number;
 };
 
-type GeolocationDocument = Geolocation & Document;
+type GeolocationDoc = Geolocation & Document;
 
 const GeolocationSchema = new Schema<Geolocation>({
-  adress: { type: String, required: true, unique: true },
+  adress: { type: String, required: false },
+  ip: { type: String, required: true },
   country_name: { type: String, required: true },
   city: { type: String, required: true },
   latitude: { type: Number, required: true },
   longitude: { type: Number, required: true },
 });
 
-export const Geolocation = mongoose.model<GeolocationDocument>('Geolocation', GeolocationSchema);
+export const GeolocationModel = mongoose.model<GeolocationDoc>('Geolocation', GeolocationSchema);
