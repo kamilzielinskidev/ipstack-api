@@ -24,7 +24,7 @@
     "paths": {
       "@connection*": ["connection*"],
       "@config*": ["config*"],
-      "@effects*": ["effects*"]
+      "@api*": ["api*"]
     }
   }
 }

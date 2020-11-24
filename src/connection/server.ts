@@ -1,4 +1,4 @@
-import { geolocationController$ } from 'api/geolocation';
+import { authController$, geolocationController$, userController$ } from '@api/';
 import { config } from '@config/config';
 import { createServer, httpListener } from '@marblejs/core';
 import { bodyParser$ } from '@marblejs/middleware-body';
@@ -17,7 +17,7 @@ const listener = httpListener({
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     }),
   ],
-  effects: [geolocationController$],
+  effects: [userController$, authController$, geolocationController$],
 });
 
 export const create = () => createServer({ listener, port: server.port });

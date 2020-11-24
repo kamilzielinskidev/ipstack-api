@@ -10,4 +10,7 @@ export const config = {
   ipstackAPI: {
     key: process.env.IPSTACK_API_KEY || defaults.ipstackAPIKey,
   },
+  auth: {
+    jwtToken: process.env.JWT_TOKEN || defaults.jwtToken,
+  },
 };

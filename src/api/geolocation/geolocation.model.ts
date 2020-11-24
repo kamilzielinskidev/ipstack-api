@@ -11,13 +11,13 @@ export type Geolocation = {
 
 type GeolocationDoc = Geolocation & Document;
 
-const GeolocationSchema = new Schema<Geolocation>({
-  adress: { type: String, required: false },
-  ip: { type: String, required: true },
-  country_name: { type: String, required: true },
-  city: { type: String, required: true },
-  latitude: { type: Number, required: true },
-  longitude: { type: Number, required: true },
+const GeolocationSchema = new Schema({
+  adress: String,
+  ip: String,
+  country_name: String,
+  city: String,
+  latitude: Number,
+  longitude: Number,
 });
 
 export const GeolocationModel = mongoose.model<GeolocationDoc>('Geolocation', GeolocationSchema);

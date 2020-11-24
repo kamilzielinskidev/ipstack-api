@@ -3,6 +3,8 @@ import { from, of, throwError } from 'rxjs';
 import { pluck, switchMap } from 'rxjs/operators';
 import { config } from '@config/config';
 
+const { key } = config.ipstackAPI;
+
 type IPStackResponseSuccess = {
   ip: string;
   type: string;
@@ -45,9 +47,7 @@ type IPStackResponseError = {
 
 export const fetchGeolocationData$ = (query: string) =>
   from(
-    Axios.get<IPStackResponseSuccess & IPStackResponseError>(
-      `http://api.ipstack.com/${query}?access_key=${config.ipstackAPI.key}`,
-    ),
+    Axios.get<IPStackResponseSuccess & IPStackResponseError>(`http://api.ipstack.com/${query}?access_key=${key}`),
   ).pipe(
     pluck('data'),
     switchMap((data) => ('success' in data && !data.success ? throwError(new Error()) : of(data))),
