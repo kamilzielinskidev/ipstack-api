@@ -8,7 +8,7 @@ export type User = {
   role: Role[];
 };
 
-type UserDoc = User & Document;
+export type UserDoc = User & Document;
 
 const UserSchema = new Schema({
   login: { type: String, unique: true },

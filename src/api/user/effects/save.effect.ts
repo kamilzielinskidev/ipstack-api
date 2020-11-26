@@ -1,6 +1,5 @@
-import { Observable } from 'rxjs';
 import { map, pluck, switchMap } from 'rxjs/operators';
-import { HttpRequest, use } from '@marblejs/core';
+import { HttpEffect, use } from '@marblejs/core';
 import { Joi, validator$ } from '@marblejs/middleware-joi';
 
 import { hashPass } from '../helpers';
@@ -13,7 +12,7 @@ const requestValidator$ = validator$({
   }),
 });
 
-export const saveEffect$ = (req$: Observable<HttpRequest>) =>
+export const saveEffect$: HttpEffect = (req$) =>
   req$.pipe(
     use(requestValidator$),
     pluck('body'),

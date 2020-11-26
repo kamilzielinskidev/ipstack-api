@@ -1,1 +1,1 @@
-export { login$ } from './login';
+export { loginEffect$ } from './login.effect';

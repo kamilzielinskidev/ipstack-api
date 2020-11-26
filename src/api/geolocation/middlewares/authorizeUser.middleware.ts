@@ -1,20 +1,18 @@
-import { of, throwError } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { JWTTokenPayload } from '@api/auth/helpers';
 import { findOneByLogin } from '@api/user/user.dao';
-import { config } from '@config/config';
-import { HttpError, HttpStatus } from '@marblejs/core';
+import { config } from '@config';
+import { unauthorized } from '@errors';
 import { authorize$ } from '@marblejs/middleware-jwt';
+import { errorCondition } from '@utils';
 
 const { jwtToken } = config.auth;
 
 const verifyUser$ = ({ login }: JWTTokenPayload) =>
   findOneByLogin(login).pipe(
-    switchMap((user) =>
-      !!user
-        ? of(user).pipe(map(({ login, role }) => ({ login, role })))
-        : throwError(new HttpError('Authorization unsuccessfull', HttpStatus.UNAUTHORIZED)),
-    ),
+    switchMap(errorCondition((user) => !!user, unauthorized)),
+    map((userDoc) => userDoc!),
+    map(({ login, role }) => ({ login, role })),
   );
 
 export const authorizeUser$ = authorize$({ secret: jwtToken }, verifyUser$);

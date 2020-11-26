@@ -1,11 +1,10 @@
-import { Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { HttpRequest } from '@marblejs/core';
+import { map, switchMap } from 'rxjs/operators';
+import { HttpEffect } from '@marblejs/core';
 
 import { findAll } from '../geolocation.dao';
 
-export const findAllEffect$ = (req$: Observable<HttpRequest>) =>
+export const findAllEffect$: HttpEffect = (req$) =>
   req$.pipe(
-    mergeMap(findAll),
+    switchMap(findAll),
     map((body) => ({ body })),
   );

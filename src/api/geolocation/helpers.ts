@@ -1,7 +1,9 @@
 import Axios from 'axios';
-import { from, of, throwError } from 'rxjs';
+import { from } from 'rxjs';
 import { pluck, switchMap } from 'rxjs/operators';
-import { config } from '@config/config';
+import { config } from '@config';
+import { badRequest, failedDependency } from '@errors';
+import { errorCondition } from '@utils';
 
 const { key } = config.ipstackAPI;
 
@@ -45,10 +47,11 @@ type IPStackResponseError = {
   };
 };
 
+type IpStackResponse = IPStackResponseError & IPStackResponseSuccess;
+
 export const fetchGeolocationData$ = (query: string) =>
-  from(
-    Axios.get<IPStackResponseSuccess & IPStackResponseError>(`http://api.ipstack.com/${query}?access_key=${key}`),
-  ).pipe(
+  from(Axios.get<IpStackResponse>(`http://api.ipstack.com/${query}?access_key=${key}`)).pipe(
     pluck('data'),
-    switchMap((data) => ('success' in data && !data.success ? throwError(new Error()) : of(data))),
+    switchMap(errorCondition((data) => !('success' in data && !data.success), failedDependency)),
+    switchMap(errorCondition((data) => data.type !== null, badRequest)),
   );

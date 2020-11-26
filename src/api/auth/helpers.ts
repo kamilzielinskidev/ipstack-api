@@ -11,9 +11,8 @@ export type JWTTokenPayload = {
   exp: number;
 };
 
-export const generateTokenPayload = ({ login, role }: User) =>
-  ({
-    login,
-    role,
-    exp: generateExpirationInHours(4),
-  } as JWTTokenPayload);
+export const generateTokenPayload = ({ login, role }: User): JWTTokenPayload => ({
+  login,
+  role,
+  exp: generateExpirationInHours(4),
+});
