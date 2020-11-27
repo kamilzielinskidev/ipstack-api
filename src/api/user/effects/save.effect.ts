@@ -3,7 +3,7 @@ import { HttpEffect, use } from '@marblejs/core';
 import { Joi, validator$ } from '@marblejs/middleware-joi';
 
 import { hashPass } from '../helpers';
-import { save } from '../user.dao';
+import { save$ } from '../user.dao';
 
 const requestValidator$ = validator$({
   body: Joi.object({
@@ -16,6 +16,6 @@ export const saveEffect$: HttpEffect = (req$) =>
   req$.pipe(
     use(requestValidator$),
     pluck('body'),
-    switchMap(({ login, password }) => save({ login, password: hashPass(password), role: ['ADMIN'] })),
+    switchMap(({ login, password }) => save$({ login, password: hashPass(password), role: ['ADMIN'] })),
     map((body) => ({ body })),
   );

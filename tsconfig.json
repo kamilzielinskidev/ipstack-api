@@ -19,7 +19,7 @@
       "@api*": ["api*"],
       "@config": ["config/config.ts"],
       "@connection*": ["connection*"],
-      "@errors": ["errors/index.ts"],
+      "@middlewares": ["middlewares/index.ts"],
       "@outputs": ["outputs/index.ts"],
       "@utils": ["utils.ts"]
     },

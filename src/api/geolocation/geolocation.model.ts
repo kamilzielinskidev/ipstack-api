@@ -12,8 +12,8 @@ export type Geolocation = {
 type GeolocationDoc = Geolocation & Document;
 
 const GeolocationSchema = new Schema({
-  adress: String,
-  ip: String,
+  adress: { type: String, unique: true },
+  ip: { type: String, unique: true },
   country_name: String,
   city: String,
   latitude: Number,
