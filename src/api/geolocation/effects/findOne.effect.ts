@@ -1,6 +1,9 @@
-import { pluck, switchMap, map } from 'rxjs/operators';
+import { notFound } from 'errors/not-found';
+import { map, pluck, switchMap } from 'rxjs/operators';
 import { HttpEffect, use } from '@marblejs/core';
 import { Joi, validator$ } from '@marblejs/middleware-joi';
+import { errorCondition } from '@utils';
+
 import { findOne } from '../geolocation.dao';
 
 const requestValidator$ = validator$({
@@ -14,5 +17,6 @@ export const findOneEffect$: HttpEffect = (req$) =>
     use(requestValidator$),
     pluck('params', 'query'),
     switchMap(findOne),
+    switchMap(errorCondition((geolocation) => !!geolocation, notFound)),
     map((body) => ({ body })),
   );
