@@ -1,16 +1,12 @@
-import { compareSync } from 'bcrypt';
-import { of, zip } from 'rxjs';
-import { map, pluck, switchMap } from 'rxjs/operators';
-import { findOneByLogin } from '@api/user/user.dao';
-import { UserDoc } from '@api/user/user.model';
+import { catchError, map, pluck, switchMap } from 'rxjs/operators';
+import { findOneByCredentials$ } from '@api/user/user.dao';
 import { config } from '@config';
-import { unauthorized } from '@errors';
-import { HttpEffect, use } from '@marblejs/core';
+import { HttpEffect, HttpError, HttpStatus, use } from '@marblejs/core';
 import { Joi, validator$ } from '@marblejs/middleware-joi';
 import { generateToken } from '@marblejs/middleware-jwt';
-import { errorCondition } from '@utils';
 
 import { generateTokenPayload } from '../helpers';
+import { throwError } from 'rxjs';
 
 const { jwtToken } = config.auth;
 
@@ -26,16 +22,10 @@ export const loginEffect$: HttpEffect = (req$) =>
     use(requestValidator$),
     pluck('body'),
     switchMap(({ login, password }) =>
-      zip(
-        findOneByLogin(login).pipe(
-          switchMap(errorCondition((userDoc) => !!userDoc, unauthorized)),
-          map((userDoc) => userDoc as UserDoc),
-        ),
-        of(password),
+      findOneByCredentials$(login, password).pipe(
+        catchError((err) => throwError(new HttpError(err, HttpStatus.FORBIDDEN))),
       ),
     ),
-    switchMap(errorCondition(([user, password]) => compareSync(password, user.password), unauthorized)),
-    map(([user]) => user),
     map(generateTokenPayload),
     map(generateToken({ secret: jwtToken })),
     map((token) => ({ body: { token } })),

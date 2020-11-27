@@ -1,8 +1,8 @@
 import { combineRoutes, r } from '@marblejs/core';
+import { authorizeUser$ } from '@middlewares';
 
 import { findAllEffect$, removeEffect$, saveEffect$ } from './effects';
 import { findOneEffect$ } from './effects/findOne.effect';
-import { authorizeUser$ } from './middlewares';
 
 const get$ = r.pipe(r.matchPath('/'), r.matchType('GET'), r.useEffect(findAllEffect$));
 

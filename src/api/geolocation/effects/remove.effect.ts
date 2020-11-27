@@ -2,7 +2,7 @@ import { map, pluck, switchMap } from 'rxjs/operators';
 import { HttpEffect, use } from '@marblejs/core';
 import { Joi, validator$ } from '@marblejs/middleware-joi';
 
-import { remove } from '../geolocation.dao';
+import { remove$ } from '../geolocation.dao';
 
 const requestValidator$ = validator$({
   params: Joi.object({
@@ -14,6 +14,6 @@ export const removeEffect$: HttpEffect = (req$) =>
   req$.pipe(
     use(requestValidator$),
     pluck('params', 'query'),
-    switchMap(remove),
+    switchMap(remove$),
     map((body) => ({ body })),
   );

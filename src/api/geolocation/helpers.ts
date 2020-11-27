@@ -1,8 +1,7 @@
 import Axios from 'axios';
 import { from } from 'rxjs';
-import { pluck, switchMap } from 'rxjs/operators';
+import { pluck } from 'rxjs/operators';
 import { config } from '@config';
-import { badRequest, failedDependency } from '@errors';
 import { errorCondition } from '@utils';
 
 const { key } = config.ipstackAPI;
@@ -52,6 +51,6 @@ type IpStackResponse = IPStackResponseError & IPStackResponseSuccess;
 export const fetchGeolocationData$ = (query: string) =>
   from(Axios.get<IpStackResponse>(`http://api.ipstack.com/${query}?access_key=${key}`)).pipe(
     pluck('data'),
-    switchMap(errorCondition((data) => !('success' in data && !data.success), failedDependency)),
-    switchMap(errorCondition((data) => data.type !== null, badRequest)),
+    errorCondition((data) => !('success' in data && !data.success), 'Failed to fetch from IPStack API'),
+    errorCondition((data) => data.type !== null, 'Requested data not found'),
   );
