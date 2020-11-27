@@ -10,12 +10,10 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "node -r ts-node/register -r tsconfig-paths/register dist/index.js",
     "start:dev": "ts-node -r tsconfig-paths/register src/index.ts",
     "lint": "tslint --config tslint.json --project tsconfig.json",
-    "tsc": "tsc",
-    "tslint:all": "tslint -c tslint.json 'src/**/*.ts'",
-    "watch": "nodemon --watch src --ext ts --exec npm run start:dev"
+    "tsc": "tsc"
   },
   "dependencies": {
     "@marblejs/core": "^3.4.5",
@@ -36,7 +34,6 @@
     "@types/mongoose": "^5.10.1",
     "chalk": "^4.1.0",
     "heroku": "^7.47.3",
-    "nodemon": "^2.0.6",
     "prettier": "^2.1.2",
     "ts-node": "^9.0.0",
     "tsconfig-paths": "^3.9.0",

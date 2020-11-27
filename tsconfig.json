@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "alwaysStrict": true,
-    "baseUrl": "src",
+    "baseUrl": ".",
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -16,12 +16,12 @@
     "noUnusedParameters": true,
     "outDir": "dist",
     "paths": {
-      "@api*": ["api*"],
-      "@config": ["config/config.ts"],
-      "@connection*": ["connection*"],
-      "@middlewares": ["middlewares/index.ts"],
-      "@outputs": ["outputs/index.ts"],
-      "@utils": ["utils.ts"]
+      "@api*": ["src/api*"],
+      "@config": ["src/config/config.ts"],
+      "@connection*": ["src/connection*"],
+      "@middlewares": ["src/middlewares/index.ts"],
+      "@outputs": ["src/outputs/index.ts"],
+      "@utils": ["src/utils.ts"]
     },
     "skipLibCheck": true,
     "sourceMap": true,

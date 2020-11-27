@@ -1,16 +1,14 @@
-import { defaults } from './defaults';
-
 export const config = {
   server: {
-    port: Number(process.env.PORT || defaults.port),
+    port: Number(process.env.PORT!),
   },
   db: {
-    url: process.env.DB_URL_MAIN || defaults.dbUrl,
+    url: process.env.DB_URL_MAIN!,
   },
   ipstackAPI: {
-    key: process.env.IPSTACK_API_KEY || defaults.ipstackAPIKey,
+    key: process.env.IPSTACK_API_KEY!,
   },
   auth: {
-    jwtToken: process.env.JWT_TOKEN || defaults.jwtToken,
+    jwtToken: process.env.JWT_TOKEN!,
   },
 };
