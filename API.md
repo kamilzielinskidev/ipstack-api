@@ -19,3 +19,4 @@ All geolocation requests requires valid jwt token as header:
 | `/geolocation` | `GET` | - | - | Gets all geolocations |
 | `/geolocation/:query` | `GET` | `query: looked for ip or adress` | - | Gets one geolocation |
 | `/geolocation` | `POST` | - | `{"query": "twitch.tv"}` | Saves unique queried adress in database |
+| `/geolocation/:query` | `DELETE` | `query: ip or adress to delete` | - | Removes one geolocation from database |
