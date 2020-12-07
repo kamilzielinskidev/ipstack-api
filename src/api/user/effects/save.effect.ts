@@ -1,5 +1,5 @@
 import { map, pluck, switchMap } from 'rxjs/operators';
-import { HttpEffect, use } from '@marblejs/core';
+import { HttpEffect, HttpStatus, use } from '@marblejs/core';
 import { Joi, validator$ } from '@marblejs/middleware-joi';
 
 import { hashPass } from '../helpers';
@@ -17,5 +17,5 @@ export const saveEffect$: HttpEffect = (req$) =>
     use(requestValidator$),
     pluck('body'),
     switchMap(({ login, password }) => save$({ login, password: hashPass(password), role: ['ADMIN'] })),
-    map((body) => ({ body })),
+    map((body) => ({ body, status: HttpStatus.CREATED })),
   );
