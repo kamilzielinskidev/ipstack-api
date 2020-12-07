@@ -34,5 +34,5 @@ export const saveEffect$: HttpEffect = (req$) =>
         catchError((err) => throwError(new HttpError(err, HttpStatus.BAD_REQUEST))),
       ),
     ),
-    map((body) => ({ body })),
+    map((body) => ({ body, status: HttpStatus.CREATED })),
   );
